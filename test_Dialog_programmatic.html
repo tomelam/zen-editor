@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-	<title>Dialog Widget Tests</title>
+	<title>Test Programmatic Dialog</title>
 
 
     <style type="text/css">
@@ -61,27 +61,6 @@
 					},pane);
 				}
 				setTimeout(function(){ thirdDlg.show(); },"3000");
-			};
-
-			open2Dialogs = function (){
-				registry.byId('dialog1').show();
-				setTimeout(lang.hitch(registry.byId('fifthDlg'), 'show'), 1000);
-			};
-
-			showSelfDestructDlg = function(){
-				//for testing #12436
-				var dlg = new Dialog({
-					id: 'SelfDestructDlg',
-					title: 'Self-Destruct Dialog',
-					content: 'This dialog will destroy itself onHide.<br/><input type="text" id="SelfDestructDlgInput" />',
-					onHide: function(){
-						// Use setTimeout() to avoid memory leak warning for sIEve
-						setTimeout(function(){
-							dlg.destroyRecursive();
-						}, 0);
-					}
-				});
-				dlg.show();
 			};
 
 			parser.parse();
