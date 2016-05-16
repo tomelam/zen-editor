@@ -30,6 +30,9 @@
 			"dijit/Dialog",
 			"dijit/form/Button",
 
+                        "dojo/dom-construct",
+                        "dojo/on",
+
 			// used by parser
 			"dijit/Editor",
 			"dijit/_editor/plugins/AlwaysShowToolbar",
@@ -46,10 +49,22 @@
 			"dijit/layout/TabContainer",
 
 			"dojo/domReady!"
-		], function(lang, stamp, dom, registry, Dialog, Button){
+		], function(lang, stamp, dom, registry, Dialog, Button, domConstruct, on){
+                        var thirdDlg, editor, myButton, closeButton;
 
-			var thirdDlg, editor;
-			createDialog = function(){
+                        addDialogHTML = function() {
+                                var tree, html = '<div id="thirdDialog" style="display: none;">';
+                                html += '<textarea id="dialogTextarea" style="width: 90%" placeholder="enter text here"></textarea>';
+                                html += '<br><div id="editButton"></div><div id="editCloseButton"></div>';
+                                tree = domConstruct.toDom(html);
+                                domConstruct.place(tree, "editorDialog");
+		                console.log("tree => " + tree);
+			};
+			removeDialogHTML = function() {
+				domConstruct.destroy("thirdDialog");
+			};
+                        createDialog = function(){
+				
                                 editor = dom.byId("editor");
                                 dom.byId("dialogTextarea").value = editor.value;
                                 if(!thirdDlg){
@@ -62,46 +77,45 @@
 						style: {width: '300px'}
 					},pane);
 				}
-                                thirdDlg.show();
-                                var myButton = new Button({
-                                        label: "Accept",
-                                        onClick: function(){
-                                                editor = dom.byId("editor");
-                                                newVal = dom.byId("dialogTextarea").value;
-			                        console.log("focusing editor and setting value to " + newVal);
-			                        editor.focus();
-                                                editor.value = newVal;
-                                        }
-                                }, "editButton").startup();
+				thirdDlg.show();
+				if(!myButton){
+				        myButton = new Button({
+                                                label: "Accept",
+                                                onClick: function(){
+                                                        editor = dom.byId("editor");
+                                                        newVal = dom.byId("dialogTextarea").value;
+			                                console.log("focusing editor and setting value to " + newVal);
+			                                editor.focus();
+                                                        editor.value = newVal;
+                                                }
+				        }, "editButton").startup();
+				}
 
-                                var closeButton = new Button({
-                                        label: "Close",
-                                        onClick: function(){
-                                                thirdDlg.hide();
-                                        }
-                                }, "editCloseButton").startup();
+				if(!closeButton){
+				        closeButton = new Button({
+                                                label: "Close",
+				                onClick: function(){
+                                                        thirdDlg.hide();
+                                                }
+				        }, "editCloseButton").startup();
+				}
                         };
 
-		});
+            });
+
         </script>
 </head>
 <body class="claro" role="main">
 
 	<h2>Simulated Editor with Dialog</h2>
 
+        <button onclick="addDialogHTML();">Create Editor's HTML</button>
+        <button onclick="removeDialogHTML();">Remove Editor's HTML</button>
         <button onclick="createDialog();">Edit</button>
         <br />
 
-	<div id="thirdDialog" style="display: none;">
-		<p>
-			Enter text then hit OK.
-			Focus will be shifted to "editor" below and text will be ed.
-		</p>
-		<textarea id="dialogTextarea" style="width: 90%" placeholder="enter text here"></textarea>
-		<br>
-        	<div id="editButton"></div>
-	        <div id="editCloseButton"></div>
-	</div>
+        <div id="editorDialog"></div>
+
 	<textarea id="editor" style="width: 90%; border: solid gray 1px;">initial value</textarea>
 
 </body>
