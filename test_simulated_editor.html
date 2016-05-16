@@ -25,7 +25,7 @@
 			"dojo/_base/lang",
 			"dojo/date/stamp",
                         "dojo/dom",
-                        "dojo/parser",
+
 			"dijit/registry",
 			"dijit/Dialog",
 			"dijit/form/Button",
@@ -46,14 +46,14 @@
 			"dijit/layout/TabContainer",
 
 			"dojo/domReady!"
-		], function(lang, stamp, dom, parser, registry, Dialog, Button){
+		], function(lang, stamp, dom, registry, Dialog, Button){
 
 			var thirdDlg, editor;
 			createDialog = function(){
+                                editor = dom.byId("editor");
+                                dom.byId("dialogTextarea").value = editor.value;
                                 if(!thirdDlg){
                                         console.log("creating dialog");
-                                        editor = dom.byId("editor");
-                                        dom.byId("dialogTextarea").value = editor.value;
 					var pane = dom.byId('thirdDialog');
 					// should specify a width on dialogs with <p> tags, otherwise they get too wide
 					thirdDlg = new dijit.Dialog({
@@ -82,16 +82,10 @@
                                 }, "editCloseButton").startup();
                         };
 
-			parser.parse();
 		});
         </script>
 </head>
 <body class="claro" role="main">
-
-	<script type="dojo/require">
-		dom: "dojo/dom",
-		registry: "dijit/registry"
-	</script>
 
 	<h2>Simulated Editor with Dialog</h2>
 
