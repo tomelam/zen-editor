@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>simple-popup.js - A jQuery(optional) plugin to show a centered popup</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Helvetica, Arial, sans-serif;
+            background-color: #fefefe;
+        }
+        .hide {
+            display: none;
+        }
+        .btn {
+            padding: .5em .75em;
+            font-family: Helvetica, Arial, sans-serif;
+            line-height: 1;
+            text-align: center;
+            background-color: #fafafa;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            outline: 0;
+        }
+        .btn:hover {
+            background-color: #f0f0f0;
+        }
+        .btn:active {
+            box-shadow: inset 0 2px 2px #ddd;
+        }
+        .btn-mid {
+            font-size: 1.25em;
+        }
+        .wrapper {
+            width: 960px;
+            margin: 0 auto;
+        }
+
+        .content {
+            margin-top: 30px;
+        }
+        .demo .btn-group {
+            text-align: center;
+        }
+        .popup-wrapper {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px #aaa;
+            overflow: hidden;
+        }
+        .popup-title {
+            padding: 10px 15px;
+            background-color: #f4f4f4;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .popup-title h3 {
+            margin: 0;
+            line-height: 1.5em;
+            color: #333;
+        }
+        .popup-body {
+            padding: 10px 15px;
+            color: #555;
+        }
+        .popup-close {
+            float: right;
+            margin-top: 2px;
+            padding: 0;
+            font-size: 24px;
+            line-height: 1;
+            border: 0;
+            background: transparent;
+            color: #aaa;
+            cursor: pointer;
+        }
+        .popup-close:hover {
+            color: #333;
+        }
+
+        .intro {
+            margin-top: 100px;
+            text-align: center;
+        }
+        .intro h1 {
+            color: #aaa;
+        }
+        .intro p {
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="content">
+            <div class="wrapper">
+                <div id="demo" class="demo">
+                    <div class="btn-group">
+                        <button type="button" id="open" class="btn btn-mid">Open</button>
+                        <button type="button" id="close" class="btn btn-mid">Close</button>
+                    </div>
+                    <div id="popup" class="popup-wrapper hide">
+                        <div class="popup-content">
+                            <div class="popup-title">
+                                <button type="button" class="popup-close">&times;</button>
+                                <h3>Popup Title</h3>
+                            </div>
+                            <div class="popup-body">
+                                <p>simple-popup.js - A jQuery(optional) plugin to show a centered popup</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="intro">
+                    <h1>simple-popup</h1>
+                    <p>A jQuery(optional) plugin to show a popup.</p>
+                </div>
+            </div>
+        </div>
+        <a href="https://github.com/Alex1990/simple-popup"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
+    </div>
+    <!--<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.2.min.js"></script>-->
+    <script src="simple-popup.js"></script>
+    <script>
+        var popupEl = document.getElementById('popup'); 
+
+        // As a native plugin
+        var popup = new Popup(popupEl, {
+            width: 400,
+            height: 300
+        });
+
+        // As a jQuery plugin
+        // var popup = $('#popup').popup({
+        //     width: 400,
+        //     height: 300
+        // });
+
+        var open = document.getElementById('open');
+        var close = document.getElementById('close');
+
+        open.onclick = function() {
+            popup.open();
+        };
+
+        close.onclick = function() {
+            popup.close();
+        };
+    </script>
+</body>
+</html>

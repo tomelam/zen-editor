@@ -1,0 +1,49 @@
+<html>
+<head>
+    <!-- See http://stackoverflow.com/questions/11340194/dojo-on-and-the-capture-phase -->
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dojo/dojo.xd.js.uncompressed.js"></script>
+    <script type="text/javascript">
+        function forwardCaptureEvent(e) {
+            var listener = this.captureEventHandlers[e.type];
+            if (listener != null) listener.apply(this, arguments);
+        }
+
+        function enableCaptureEvent(domNode, eventType) {
+            if (domNode.captureEventHandlers == null) domNode.captureEventHandlers = {};
+            var evtHandlers = domNode.captureEventHandlers;
+            if (evtHandlers[eventType] == null) evtHandlers[eventType] = function(e) {};
+            domNode.addEventListener(eventType, forwardCaptureEvent, true);
+        }
+
+        function logEvent(label, e) {
+            dojo.byId("log").innerHTML += label + " " +
+                                          e.currentTarget.id + " " + e.type + " " +
+                                          [ '', 'capturing', 'target', 'bubbling' ][ e.eventPhase ] + "<br/>";
+        }
+
+        function logCaptureEvent(e) { 
+            logEvent("capture phase:", e);
+        }
+
+        function logBubbleEvent(e) { 
+            logEvent("bubble phase:", e);
+        }
+
+        window.onload = function () {
+            enableCaptureEvent(dojo.byId("test"), "click");
+            dojo.connect(dojo.byId("test").captureEventHandlers, "click", logCaptureEvent);
+            dojo.connect(dojo.byId("test"), "click", logBubbleEvent);
+        }
+    </script>
+</head>
+<body>
+    <div id="test" style="background: darkorange; padding: 20px;">
+        <div style="background: gold; padding: 20px;">
+            <div style="background: cornsilk; ">Click me.</div>
+        </div>
+    </div>
+
+    <div id="log"></div>
+</body>
+</html>
