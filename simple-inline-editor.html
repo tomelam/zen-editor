@@ -3,8 +3,8 @@
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <title>Simple Inline Editor Demo</title>
-    <script type="text/javascript" src="dojo/dojo/dojo.js"></script>
-    <script type="text/javascript" src="inline-editor.js"></script>
+    <script type="text/javascript" src="dojo/dojo.js"></script>
+    <script type="text/javascript" src="inject-editor.js"></script>
     <style type="text/css">
 	@import "demo.css";
     </style>
@@ -14,11 +14,10 @@
     <h1>Simple Inline Editor Demo</h1>
     <p>
     <button id="test-button" onclick="alert('We are in Run Mode');">Test Run Mode</button>
-    <button onclick="destroyDialog();">Remove Editor's HTML</button>
     <p>
     <div id="editorDialogContainer"></div>
     <textarea id="editor" style="width: 90%; border: solid gray 1px;">initial value</textarea>
-        
+    
     <h2>Gallery</h2>
     <div id="editable" style="overflow:auto; width:100%;">
 	<div id="pic-slot-1" class="zen-editor zen-pic-slot"></div>
