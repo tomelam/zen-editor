@@ -1,4 +1,8 @@
+@import "dojo/dijit/themes/claro/document.css";
+@import "dojo/dijit/tests/css/dijitTests.css";
+@import "dojo/dijit/themes/claro/claro.css";
+@import "dojo/dojox/mobile/themes/common/dijit/dijit.css";
 form { margin-bottom : 0; }
 table { border: none; }
-#dialog3_underlay { background-color: #027 }
-#fifthDlg_underlay { background-color: yellow; }
+.zen-pic-slot { float:left; background-color:lightgray; min-width:300px; min-height:150px; margin:4px; }
+#dyn_dialog_underlay { background-color: #027 }

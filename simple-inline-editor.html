@@ -1,33 +1,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <title>Simple Inline Editor Demo</title>
     <script type="text/javascript" src="dojo/dojo/dojo.js"></script>
     <script type="text/javascript" src="inline-editor.js"></script>
     <style type="text/css">
-      @import "dojo/dijit/themes/claro/document.css";
-      @import "dojo/dijit/tests/css/dijitTests.css";
-      @import "dojo/dijit/themes/claro/claro.css";
-      @import "dojo/dojox/mobile/themes/common/dijit/dijit.css";
-      @import "dialog.css";
-      @import "demo.css";
+	@import "demo.css";
     </style>
-  </head>
+</head>
   
-  <body>
-      <h1>Simple Inline Editor Demo</h1>
-      
-      <button id="test-button">Clicks inactivated?</button>
-      
-      <h2>Gallery</h2>
-      <div id="editable" style="overflow:auto; width:100%;">
-	<div id="pic-slot-1" class="pic-slot"></div>
-	<div id="pic-slot-2" class="pic-slot"></div>
-	<div id="pic-slot-3" class="pic-slot"></div>
-	<div id="pic-slot-4" class="pic-slot"></div>
-      </div>
-	
-      <hr></hr>
-      <!-- hhmts start -->Last modified: Mon May 16 14:10:23 IST 2016 <!-- hhmts end -->
-  </body>
+<body class="claro" role="main">
+    <h1>Simple Inline Editor Demo</h1>
+    <p>
+    <button id="test-button" onclick="alert('We are in Run Mode');">Test Run Mode</button>
+    <button onclick="destroyDialog();">Remove Editor's HTML</button>
+    <p>
+    <div id="editorDialogContainer"></div>
+    <textarea id="editor" style="width: 90%; border: solid gray 1px;">initial value</textarea>
+        
+    <h2>Gallery</h2>
+    <div id="editable" style="overflow:auto; width:100%;">
+	<div id="pic-slot-1" class="zen-editor zen-pic-slot"></div>
+	<div id="pic-slot-2" class="zen-editor zen-pic-slot"></div>
+	<div id="pic-slot-3" class="zen-editor zen-pic-slot"></div>
+	<div id="pic-slot-4" class="zen-editor zen-pic-slot"></div>
+    </div>
+</body>
 </html>
