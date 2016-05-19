@@ -30,17 +30,25 @@
 <body class="claro" role="main">
     <h1>Simple Inline Editor Demo</h1>
     <p>
-    <button id="test-button" onclick="alert('We are in Run Mode');">Test Run Mode</button>
+    <button id="test-button" onclick="alert('We are in Run Mode');">Test the Run Mode</button>
     <p>
     <div id="editorDialogContainer"></div>
     <textarea id="editor" style="width: 90%; border: solid gray 1px;">initial value</textarea>
     
     <h2>Gallery</h2>
     <div style="overflow:auto; width:100%;">
-	<div id="pic-slot-1" class="zen-pic-slot"></div>
-	<div id="pic-slot-2" class="zen-pic-slot"></div>
-	<div id="pic-slot-3" class="zen-pic-slot"></div>
-	<div id="pic-slot-4" class="zen-pic-slot"></div>
+	<div id="pic-slot-1" class="demo-pic-slot zen-pic-slot">
+	    <img class="demo-pic-img" src="images/yellow_flowers.jpg"></img>
+	</div>
+	<div id="pic-slot-2" class="demo-pic-slot zen-pic-slot">
+	    <img class="demo-pic-img" src="images/small_airplane_on_grass.jpg"></img>
+	</div>
+	<div id="pic-slot-3" class="demo-pic-slot zen-pic-slot">
+	    <img class="demo-pic-img" src="images/relaxing_outside_together.jpg"></img>
+	</div>
+	<div id="pic-slot-4" class="demo-pic-slot zen-pic-slot">
+	    <img class="demo-pic-img" src="images/sunset_over_farms.jpg"></img>
+	</div>
     </div>
 </body>
 </html>

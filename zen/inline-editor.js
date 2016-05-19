@@ -1,28 +1,20 @@
-define(["dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom-construct", "dojo/on", "dojo/dom-class", "dojo/query"],
+define(["dojo/mouse", "dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom-construct", "dojo/on", "dojo/dom-class", "dojo/query"],
 
-       function(dom, Dialog, Button, domConstruct, on, domClass, query) {
-	   dojo.addOnLoad(function() {
-	       document.addEventListener('click', ile.docClickHandler, true);
-	       document.getElementById('test-button').addEventListener('click', ile.buttonClickHandler, false);
-	       if (document.captureEvents) {
-		   console.log("Enabling capture events for clicks");
-	       }
-	       console.log("Finished initialising the Simple Inline Editor");
-	   });
-	   
+       function(mouse, dom, Dialog, Button, domConstruct, on, domClass, query) {
 	   ile = function() {};
 
 	   //FIXME: The techniques here should be checked for accuracy and up-to-dateness.
 
 	   var dynDialog, editor, acceptButton, closeButton;
 
-	   ile.docClickHandler = function(event) {
+	   console.log("Defining docEventHandler to use the capture phase of event processing (but not attaching it yet)");
+	   ile.docEventHandler = function(event) {
 	       if (!event) var event = window.event;
-	       console.dir(event);
-	       console.log("Doc click on " + event.target + ", with ID " + event.target.id + ", with srcElement.className '" + event.srcElement.className + "'");
-	       if (domClass.contains(event.srcElement, "zen-pic-slot")) {
+	       console.log("Doc click on " + event.target + ", with ID " +
+			   event.target.id + ", with srcElement.className '" + event.srcElement.className + "'");
+	       if (domClass.contains(event.srcElement, "demo-pic-img")) {
 		   ile.createDialog();
-		   ile.showDialog();
+		   ile.showDialog(event.srcElement.parentNode);
 	       }
 	       if (!domClass.contains(event.srcElement, "zen-control")) {
 		   event.cancelBubble = true; // Don't let the event bubble up.
@@ -30,22 +22,21 @@ define(["dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom-construct", "
 	       }
 	   };
 	   
-	   ile.buttonClickHandler = function() {
-	       alert("Button click");
-	   };
-	   
 	   ile.createDialog = function() {
+	       console.info("Creating Dialog (and leaving it hidden)");
+
+	       console.log("Add docEventHandler to the document node to handle all clicks (TODO:  all events, not just clicks)");
+	       document.addEventListener('click', ile.docEventHandler, true);
+
 	       if (!(dynDialog = dijit.byId("dynDialog"))) {
 		   var tree, html = '<div id="editorDialog" style="display: none;">';
 		   html += '<textarea id="dialogTextarea" style="width: 90%" placeholder="enter text here"></textarea>';
 		   html += '<br><div id="editButton"></div><div id="editCloseButton"></div>';
 		   tree = domConstruct.toDom(html);
+		   console.log("Constructing and placing the HTML elements for the Dialog");
 		   domConstruct.place(tree, "editorDialogContainer");
-		   
-		   console.info("creating dialog");
-		   console.group("domClass");
-		   console.dir(domClass);
-		   console.groupEnd();
+
+		   console.log("Turning the HTML elements into a Dialog");
 		   var pane = dom.byId('editorDialog');
 		   // should specify a width on dialogs with <p> tags, otherwise they get too wide
 		   dynDialog = new dijit.Dialog({
@@ -55,6 +46,7 @@ define(["dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom-construct", "
 		   },pane);
 		   domClass.add(dynDialog.domNode, "zen-control");
 		   
+		   console.log("Add the Accept Button");
 		   acceptButton = new Button({
 		       label: "Accept",
 		       onClick: function(){
@@ -66,6 +58,7 @@ define(["dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom-construct", "
 		       }
 		   }, "editButton").startup();
 		   
+		   console.log("Add the Close Button");
 		   closeButton = new Button({
 		       label: "Close",
 		       onClick: function(){
@@ -73,18 +66,20 @@ define(["dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom-construct", "
 		       }
 		   }, "editCloseButton").startup();
 
-		   dynDialog = dijit.byId("dynDialog"), acceptButton = dijit.byId("editButton"), closeButton = dijit.byId("editCloseButton");
-		   console.log("dynDialog => " + dynDialog + ", acceptButton => " + acceptButton + ", closeButton => " + closeButton);
+		   console.log("Adding the 'zen-control' class to certain nodes of the Buttons to allow click events to pass to them");
+		   domClass.add("editButton_label", "zen-control");
+		   domClass.add("editCloseButton_label", "zen-control");
+		   query("input").forEach(function(node) {
+		       domClass.add(node, "zen-control");
+		   });
+
+		   acceptButton = dijit.byId("editButton"), editCloseButton = dijit.byId("editCloseButton");
 		   console.group("acceptButton");
 		   console.dir(acceptButton);
 		   console.groupEnd();
-
-		   // Add the "zen-control" class to the following elements to allow click events to pass to them.
-		   domClass.add("editButton_label", "zen-control");
-		   domClass.add("editCloseButton_label", "zen-control");
-		   query("input").forEach(function(node){
-		       domClass.add(node, "zen-control");
-		   });
+		   console.group("editCloseButton");
+		   console.dir(editCloseButton);
+		   console.groupEnd();
 	       }
 	   };
 	   
@@ -103,7 +98,11 @@ define(["dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom-construct", "
 	       console.log("Destroyed dynDialog? " + dijit.byId("dynDialog"));
 	   };
 	   
-	   ile.showDialog = function(){
+	   ile.showDialog = function(node) {
+	       console.log("Showing the Dialog");
+	       console.group("node for which to show dynamic Dialog");
+	       console.dir(node);
+	       console.groupEnd();
 	       editor = dom.byId("editor");
 	       dom.byId("dialogTextarea").value = editor.value;
 	       dynDialog.show();
