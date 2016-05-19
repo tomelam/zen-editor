@@ -1,5 +1,3 @@
-dojo.provide("inline-editor");
-
 define(["dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom-construct", "dojo/on", "dojo/dom-class", "dojo/query"],
 
        function(dom, Dialog, Button, domConstruct, on, domClass, query) {
