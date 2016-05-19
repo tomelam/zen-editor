@@ -27,7 +27,12 @@ define(["dojo/mouse", "dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom
 
 	       if (!(dynDialog = dijit.byId("dynDialog"))) {
 		   var tree, html = '<div id="editorDialog" style="display: none;">';
-		   html += '<textarea id="dialogTextarea" style="width: 90%" placeholder="enter text here"></textarea>';
+		   html += '<strong>Image URL</strong>';
+		   html += '<textarea id="dialogImageURL" style="width: 90%" placeholder="enter text here"></textarea>';
+		   html += '<strong>Caption</strong>';
+		   html += '<textarea id="dialogFigureCaption" style="width: 90%" placeholder="enter text here"></textarea>';
+		   html += '<strong>Subtext</strong>';
+		   html += '<textarea id="dialogSubtext" style="width: 90%" placeholder="enter text here"></textarea>';
 		   html += '<br><div id="editButton"></div><div id="editCloseButton"></div>';
 		   tree = domConstruct.toDom(html);
 		   console.log("Constructing and placing the HTML elements for the Dialog");
@@ -47,11 +52,11 @@ define(["dojo/mouse", "dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom
 		   acceptButton = new Button({
 		       label: "Accept",
 		       onClick: function(){
-			   editor = dom.byId("editor");
-			   newVal = dom.byId("dialogTextarea").value;
+			   urlEditor = dom.byId("dialogImageURL");
+			   newVal = dom.byId("dialogImageURL").value;
 			   console.log("focusing editor and setting value to " + newVal);
-			   editor.focus();
-			   editor.value = newVal;
+			   node.src = newVal;
+			   //FIXME: Is there a 'focus' method to call?
 		       }
 		   }, "editButton").startup();
 		   
@@ -102,8 +107,7 @@ define(["dojo/mouse", "dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom
 	       console.dir(node.parentNode);
 	       console.dir(node.parentNode.parentNode);
 	       console.groupEnd();
-	       editor = dom.byId("editor");
-	       dom.byId("dialogTextarea").value = editor.value;
+	       dom.byId("dialogImageURL").value = node.src;
 	       dynDialog.show();
 	   };
 	  
