@@ -1,6 +1,1 @@
-simple-popup-master is from
-http://www.cssscript.com/simple-clean-popup-window-with-pure-javascript-simple-popup/
-
-test_Dialog.html is copied from http://archive.dojotoolkit.org/nightly/dojotoolkit/dijit/tests/test_Dialog.html
-
-The dojo, dijit, dojox, and util here are from dojo-release-1.10.4-src .
+The dojo, dijit, dojox, and util used were from dojo-release-1.10.4-src .
