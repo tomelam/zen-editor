@@ -2,9 +2,6 @@ define(["dojo/mouse", "dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom
 
        function(mouse, dom, Dialog, Button, domConstruct, on, domClass, query) {
 	   ile = function() {};
-
-	   //FIXME: The techniques here should be checked for accuracy and up-to-dateness.
-
 	   var dynDialog, editor, acceptButton, closeButton;
 
 	   console.log("Defining docEventHandler to use the capture phase of event processing (but not attaching it yet)");
@@ -14,7 +11,7 @@ define(["dojo/mouse", "dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom
 			   event.target.id + ", with srcElement.className '" + event.srcElement.className + "'");
 	       if (domClass.contains(event.srcElement, "demo-pic-img")) {
 		   ile.createDialog();
-		   ile.showDialog(event.srcElement.parentNode);
+		   ile.showDialog(event.srcElement);
 	       }
 	       if (!domClass.contains(event.srcElement, "zen-control")) {
 		   event.cancelBubble = true; // Don't let the event bubble up.
@@ -41,7 +38,7 @@ define(["dojo/mouse", "dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom
 		   // should specify a width on dialogs with <p> tags, otherwise they get too wide
 		   dynDialog = new dijit.Dialog({
 		       id: "dynDialog",
-		       title: "Edit Attribute",
+		       title: "Edit Attributes",
 		       style: {width: '300px'}
 		   },pane);
 		   domClass.add(dynDialog.domNode, "zen-control");
@@ -100,8 +97,10 @@ define(["dojo/mouse", "dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom
 	   
 	   ile.showDialog = function(node) {
 	       console.log("Showing the Dialog");
-	       console.group("node for which to show dynamic Dialog");
+	       console.group("nodes for which to show dynamic Dialog");
 	       console.dir(node);
+	       console.dir(node.parentNode);
+	       console.dir(node.parentNode.parentNode);
 	       console.groupEnd();
 	       editor = dom.byId("editor");
 	       dom.byId("dialogTextarea").value = editor.value;
