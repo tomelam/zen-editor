@@ -2,7 +2,7 @@ define(["dojo/mouse", "dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom
 
        function(mouse, dom, Dialog, Button, domConstruct, on, domClass, query) {
 	   ile = function() {};
-	   var dynDialog, editor, acceptButton, closeButton;
+	   var dynDialog, editor, acceptButton, closeButton, clickedOnNode;
 
 	   console.log("Defining docEventHandler to use the capture phase of event processing (but not attaching it yet)");
 	   ile.docEventHandler = function(event) {
@@ -10,7 +10,7 @@ define(["dojo/mouse", "dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom
 	       console.log("Doc click on " + event.target + ", with ID " +
 			   event.target.id + ", with srcElement.className '" + event.srcElement.className + "'");
 	       if (domClass.contains(event.srcElement, "demo-pic-img")) {
-		   ile.createDialog();
+		   ile.createDialog(event.srcElement);
 		   ile.showDialog(event.srcElement);
 	       }
 	       if (!domClass.contains(event.srcElement, "zen-control")) {
@@ -54,8 +54,8 @@ define(["dojo/mouse", "dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom
 		       onClick: function(){
 			   urlEditor = dom.byId("dialogImageURL");
 			   newVal = dom.byId("dialogImageURL").value;
-			   console.log("focusing editor and setting value to " + newVal);
-			   node.src = newVal;
+			   console.log("Focusing editor and setting value to " + newVal);
+			   clickedOnNode.src = newVal;
 			   //FIXME: Is there a 'focus' method to call?
 		       }
 		   }, "editButton").startup();
@@ -107,6 +107,7 @@ define(["dojo/mouse", "dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom
 	       console.dir(node.parentNode);
 	       console.dir(node.parentNode.parentNode);
 	       console.groupEnd();
+	       clickedOnNode = node;
 	       dom.byId("dialogImageURL").value = node.src;
 	       dynDialog.show();
 	   };
