@@ -28,18 +28,22 @@
 </head>
   
 <body class="claro" role="main">
-    <h1>Simple Inline Editor and Run-Edit-Modal-Web-Page Demo</h1>
+    <h1><strong>Simple Inline Editor and Run-Edit-Modal-Web-Page Demo</strong></h1>
     <p>
-	This Zen-enabled page is in Run Mode (its normal mode with all event handlers ready) until you press the ESCAPE key.
+	This Zen-enabled page is in <em>Run Mode</em> (its normal mode with all event handlers ready) until you press the ESCAPE key.
 	You can verify this by clicking the inline-registered click-event handler for this button:
     <p>
     <button id="test-button" onclick="alert('We are in Run Mode');">Test the Run Mode</button>
     <p>
-	Did you click the button? If so, you should have seen an alert saying "We are in Run Mode".
+	Did you click the button? If so, you should have seen an alert saying "We are in Run Mode". Now please cancel the alert if
+	you have not already. Next, when you press the ESCAPE key, the web page flips into <em>Edit Mode</em>, where the page's
+	controls and events are locked out and you can only interact with the page through Zen's control mechanisms. Try it: press
+	the ESCAPE key, then click on an image. You will be presented with a Dialog with which you can edit an image's URL, figure
+	caption, and subtext.
     <p>
     <div id="editorDialogContainer"></div>
     
-    <h2>Gallery</h2>
+    <h2><strong>Gallery</strong></h2>
     <div style="overflow:auto; width:100%;">
 	<div id="pic-slot-1" class="demo-pic-slot zen-pic-slot">
 	    <figure>
