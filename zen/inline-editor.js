@@ -6,14 +6,14 @@ define(["dojo/mouse", "dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom
 
 	   console.log("Defining docEventHandler to use the capture phase of event processing (but not attaching it yet)");
 	   ile.docEventHandler = function(event) {
-	       if (!event) var event = window.event;
-	       console.log("Doc click on " + event.target + ", with ID " +
-			   event.target.id + ", with srcElement.className '" + event.srcElement.className + "'");
-	       if (domClass.contains(event.srcElement, "demo-pic-img")) {
-		   //ile.createDialog(event.srcElement);
-		   ile.showDialog(event.srcElement);
+	       var event = event || window.event;
+	       var target = event.target || event.srcElement;
+	       console.log("Doc click on " + target + ", with ID " +
+			   target.id + ", with target.className '" + target.className + "'");
+	       if (domClass.contains(target, "demo-pic-img")) {
+		   ile.showDialog(target);
 	       }
-	       if (!domClass.contains(event.srcElement, "zen-control")) {
+	       if (!domClass.contains(target, "zen-control")) {
 		   event.cancelBubble = true; // Don't let the event bubble up.
 		   event.stopImmediatePropagation(); // Works even in the capture phase.
 	       }
