@@ -10,13 +10,17 @@ define(["dojo/mouse", "dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom
 	       console.log("Doc click on " + event.target + ", with ID " +
 			   event.target.id + ", with srcElement.className '" + event.srcElement.className + "'");
 	       if (domClass.contains(event.srcElement, "demo-pic-img")) {
-		   ile.createDialog(event.srcElement);
+		   //ile.createDialog(event.srcElement);
 		   ile.showDialog(event.srcElement);
 	       }
 	       if (!domClass.contains(event.srcElement, "zen-control")) {
 		   event.cancelBubble = true; // Don't let the event bubble up.
 		   event.stopImmediatePropagation(); // Works even in the capture phase.
 	       }
+	   };
+
+	   ile.textNodeToText = function(textNode) {
+	       return (textNode.textContent ? textNode.textContent : textNode.innerText);
 	   };
 	   
 	   ile.createDialog = function() {
@@ -52,10 +56,15 @@ define(["dojo/mouse", "dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom
 		   acceptButton = new Button({
 		       label: "Accept",
 		       onClick: function(){
-			   urlEditor = dom.byId("dialogImageURL");
 			   newVal = dom.byId("dialogImageURL").value;
-			   console.log("Focusing editor and setting value to " + newVal);
+			   console.log("Setting image source to " + newVal);
 			   clickedOnNode.src = newVal;
+			   newVal = dom.byId("dialogFigureCaption").value;
+			   clickedOnNode.parentNode.childNodes[3].textContent = newVal;
+			   newVal = dom.byId("dialogSubtext").value;
+			   //dom.byId('pic-slot-1').childNodes[2].textContent
+			   dom.byId('pic-slot-1').childNodes[2].textContent = newVal;
+			   //clickedOnNode.parentNode.childNodes[2] = newVal;
 			   //FIXME: Is there a 'focus' method to call?
 		       }
 		   }, "editButton").startup();
@@ -83,6 +92,7 @@ define(["dojo/mouse", "dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom
 		   console.dir(editCloseButton);
 		   console.groupEnd();
 	       }
+	       alert("This Zen-enabled web page is now in Edit Mode.");
 	   };
 	   
 	   ile.destroyDialog = function() {
@@ -101,14 +111,21 @@ define(["dojo/mouse", "dojo/dom", "dijit/Dialog", "dijit/form/Button", "dojo/dom
 	   };
 	   
 	   ile.showDialog = function(node) {
+	       var textNode, subtext, figureCaption;
 	       console.log("Showing the Dialog");
-	       console.group("nodes for which to show dynamic Dialog");
+	       console.group("editable nodes of the clicked-on demo-pic-slot");
 	       console.dir(node);
 	       console.dir(node.parentNode);
 	       console.dir(node.parentNode.parentNode);
 	       console.groupEnd();
 	       clickedOnNode = node;
 	       dom.byId("dialogImageURL").value = node.src;
+	       //dom.byId("dialogFigureCaption").value = node.parentNode.innerText;
+	       textNode = node.parentNode.parentNode.childNodes[2];
+	       figureCaption = ile.textNodeToText(node.parentNode.childNodes[3]);
+	       dom.byId("dialogFigureCaption").value = figureCaption;
+	       subtext = textNode.textContent ? textNode.textContent : textNode.innerText;
+	       dom.byId("dialogSubtext").value = subtext.trim();
 	       dynDialog.show();
 	   };
 	  
